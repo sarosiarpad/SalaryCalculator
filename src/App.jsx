@@ -1,4 +1,5 @@
 import HouseholdSalaryCalculator from "./components/HouseholdSalaryCalculator";
+import 'semantic-ui-css/semantic.min.css'
 
 function App() {
   return (
