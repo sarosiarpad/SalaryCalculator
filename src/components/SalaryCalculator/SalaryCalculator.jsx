@@ -16,8 +16,10 @@ const SalaryCalculator = () => {
     personal: false,
     family: false
   });
+
+  const [aprrovedMarrige, setAprrovedMarrige] = useState(false)
   
-  const [dependents, setDependents] = useState(0); // Eltartottak száma
+  const [dependents, setDependents] = useState(0);
 
   const handleNameChange = (event) => {
     setName(event.target.value);
@@ -33,8 +35,11 @@ const SalaryCalculator = () => {
 
   const handleDependentsChange = (value) => {
     setDependents(value);
-    console.log(dependents);
   };
+
+  const handleApprovedMarrige = (value) => {
+    setAprrovedMarrige(value);
+  }
 
   const calculateNettoSalary = () => {
     let nettoSalary = brutto;
@@ -45,7 +50,7 @@ const SalaryCalculator = () => {
     // TB
     nettoSalary -= brutto * 0.185;
   
-    // under25 Discount
+    // under25
     if (discounts.under25) {
       if (brutto <= 499952) {
         nettoSalary += brutto * 0.15;
@@ -54,16 +59,16 @@ const SalaryCalculator = () => {
       }
     }
   
-    // personal discount
+    // personal
     if (discounts.personal) {
       nettoSalary -= 77300;
       if (nettoSalary < 0) {
         nettoSalary = 0;
       }
     }
-  
-    // justMarried discount
-    if (discounts.justMarried) {
+
+    // justMarried
+    if (discounts.justMarried && aprrovedMarrige) {
       nettoSalary += 5000;
     }
   
@@ -82,9 +87,8 @@ const SalaryCalculator = () => {
   };
 
   useEffect(() => {
-    console.log("szia");
     calculateNettoSalary();
-  }, [brutto, discounts, dependents]);
+  }, [brutto, discounts, dependents, aprrovedMarrige]);
 
   return ( 
     <div>
@@ -101,6 +105,8 @@ const SalaryCalculator = () => {
         onDiscountChange={handleDiscountChange}
         dependents={dependents}
         onDependentsChange={handleDependentsChange}
+        approvedMarrige={aprrovedMarrige}
+        onApprovedMarrigeChange={handleApprovedMarrige}
       />
        <p>A nettó bér: {netto}</p>
     </div>
