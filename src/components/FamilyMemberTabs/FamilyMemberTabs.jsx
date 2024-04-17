@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-const FamilyMemberTabs = () => {
+const FamilyMemberTabs = (currentUser) => {
   return <>
   <div>
     

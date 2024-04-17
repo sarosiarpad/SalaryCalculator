@@ -1,10 +1,8 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Input, Label } from 'semantic-ui-react';
 
-
 const SalaryInput = ({ brutto, onBruttoChange }) => {
-
-  return ( 
+  return (
     <div className='flex flex-col w-80'>
       <h3>Bruttó bér</h3>
       <Input
@@ -27,7 +25,7 @@ const SalaryInput = ({ brutto, onBruttoChange }) => {
       />
       <p>Add meg a bruttó béredet!</p>
     </div>
-  );     
+  );
 }
- 
+
 export default SalaryInput;
