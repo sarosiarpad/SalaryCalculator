@@ -5,7 +5,7 @@ const DiscountOption = (props) => {
   const label = props.label;
   const checked = props.checked;
   const onChange = props.onChange;
-  const onChecked = props.Checked;
+  const onChecked = props.onChecked;
 
   return (
     <div className="flex items-center">

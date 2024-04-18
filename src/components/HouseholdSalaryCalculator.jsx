@@ -39,9 +39,12 @@ const HouseholdSalaryCalculator = () => {
   const handleDiscounts = (discounts) => {
     setActiveMember(prevState => ({
       ...prevState,
-      discounts: discounts
+      discounts: {
+        ...prevState.discounts,
+        ...discounts
+      }
     }));
-  };
+};
 
   return (
     <>

@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useDebugValue, useEffect } from "react";
 import { 
   Modal, 
   ModalContent, 
@@ -32,41 +32,36 @@ const Discounts = (props) => {
   const { open, dimmer } = state
 
   const handleUnder25 = (value) => {
-    handleDiscounts(prevDiscounts => ({
-      ...prevDiscounts,
+    handleDiscounts({
       under25: {
-        ...prevDiscounts.under25,
-        toggled: value
+          toggled: value
       }
-    }));
+    });
   };
   const handleJustMarried = (toggled, date, approved) => {
-    handleDiscounts(prevDiscounts => ({
-      ...prevDiscounts,
+    handleDiscounts({
       justMarried: {
         toggled: toggled,
         date: date,
         approved: approved
       }
-    }));
+    });
   };
   const handlePersonal = (value) => {
-    handleDiscounts(prevDiscounts => ({
-      ...prevDiscounts,
+    handleDiscounts({
       personal: {
         toggled: value
       }
-    }));
+    });
   };
   const handleFamily = (toggled, children, dependents) => {
-    handleDiscounts(prevDiscounts => ({
-      ...prevDiscounts,
+    handleDiscounts({
       family: {
         toggled: toggled,
         children: children > 0 ? children : 0,
-        dependents: (dependents > 0 ? (dependents > children ? children : dependents) : 0)
+        dependents: dependents > 0 ? (dependents > children ? children : dependents) : 0
       }
-    }));
+    });
   };
 
   const onMarrigeChecked = () => {
@@ -122,19 +117,20 @@ const Discounts = (props) => {
         <button onClick={() => handleFamily(family.toggled, family.children, (family.dependents - 1))}>-</button>
         <p className="text-xs">Kedvezményezettek</p>
       </div>
-    )
+    );
   }
   
   useEffect(() => {
     onMarrigeChecked();
   }, [justMarried.toggled, justMarried.date, justMarried.approved]);
+
   useEffect(() => {
     approveMarrige();
   }, [justMarried.date]);
+
   useEffect(() => {
     onFamilyChecked();
   }, [family.toggled, family.children, family.dependents]);
-  
 
   return (
     <div className='flex flex-col w-80'>
