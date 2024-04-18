@@ -1,7 +1,12 @@
 import React from "react";
 import { Checkbox } from "semantic-ui-react";
 
-const DiscountOption = ({ label, checked, onChange }) => {
+const DiscountOption = (props) => {
+  const label = props.label;
+  const checked = props.checked;
+  const onChange = props.onChange;
+  const onChecked = props.Checked;
+
   return (
     <div className="flex items-center">
       <Checkbox 
@@ -10,6 +15,7 @@ const DiscountOption = ({ label, checked, onChange }) => {
         checked={checked}
         onChange={onChange}
       />
+      {checked && onChecked && onChecked()}
     </div>
   );
 }

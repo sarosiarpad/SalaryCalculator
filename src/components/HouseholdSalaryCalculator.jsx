@@ -1,49 +1,68 @@
+import React, { useState } from "react";
 import FamilyMemberTabs from "./FamilyMemberTabs/FamilyMemberTabs";
 import HouseholdSummary from "./HouseholdSummary/HouseholdSummary";
 import SalaryCalculator from "./SalaryCalculator/SalaryCalculator";
-import { useState } from "react";
 
 const HouseholdSalaryCalculator = () => {
 
-  const [user, setUser] = useState({
-    name: "",
+  const [activeMember, setActiveMember] = useState({
+    id: 1,
+    name: "John",
     brutto: 0,
+    netto: 0,
     discounts: {
-      under25: {
-        toggled: false
-      },
-      justMarried: {
-        toggled: true,
-        date: '',
-        approved: false,
-      },
-      personal: {
-        toggled: false
-      },
-      family: {
-        toggled: false,
-        children: 0,
-        dependets: 0
-      }
+      under25: { toggled: false },
+      justMarried: { toggled: false, date: "", approved: false },
+      personal: { toggled: false },
+      family: { toggled: false, children: 0, dependents: 0 },
     },
-    netto: 0
   });
 
-  const handleUser = (props) => {
-    setUser(prevUser => ({
-      ...prevUser,
-      ...props
+  const handleName = (name) => {
+    setActiveMember(prevState => ({
+      ...prevState,
+      name: name
     }));
   };
-  
+  const handleBrutto = (brutto) => {
+    setActiveMember(prevState => ({
+      ...prevState,
+      brutto: brutto
+    }));
+  };
+  const handleNetto = (netto) => {
+    setActiveMember(prevState => ({
+      ...prevState,
+      netto: netto
+    }));
+  };
+  const handleDiscounts = (discounts) => {
+    setActiveMember(prevState => ({
+      ...prevState,
+      discounts: discounts
+    }));
+  };
+
   return (
     <>
       <header>
-        <FamilyMemberTabs />
+        <FamilyMemberTabs
+          setCurrentUser={setActiveMember}
+          activeMember={activeMember}
+        />
       </header>
       <main>
-        <SalaryCalculator user={user} handleUser={handleUser}/>
-        <HouseholdSummary/>
+        <SalaryCalculator
+          name={activeMember.name}
+          brutto={activeMember.brutto}
+          netto={activeMember.netto}
+          discounts={activeMember.discounts}
+          handleName={handleName}
+          handleBrutto={handleBrutto}
+          handleNetto={handleNetto}
+          handleDiscounts={handleDiscounts}
+        />
+        <HouseholdSummary />
       </main>
     </>
   );

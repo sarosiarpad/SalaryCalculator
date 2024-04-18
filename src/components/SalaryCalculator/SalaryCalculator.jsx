@@ -3,24 +3,16 @@ import Discounts from "./components/Discounts";
 import SalaryInput from "./components/SalaryInput";
 import NameInput from "./components/NameInput";
 
-const SalaryCalculator = ({ user, handleUser }) => {
-
-  const {name, brutto, discounts, netto} = user;
-
-  const {under25, justMarried, personal, family} = discounts;
-
-  const handleNameChange = ({ name }) => {
-    handleUser({ name: name });
-  }
-  const handleBruttoChange = ({ brutto }) => {
-    handleUser({ brutto: brutto });
-  }
-
-  const handleDiscounts = ({ discounts }) => {
-    handleUser({ discounts: { ...user.discounts, ...discounts } });
-  };
-
-  
+const SalaryCalculator = (props) => {
+  const name = props.name;
+  const brutto = props.brutto;
+  const netto = props.netto;
+  const discounts = props.discounts;
+  const {under25, justMarried, personal, family} = props.discounts;
+  const handleName = props.handleName;
+  const handleBrutto = props.handleBrutto;
+  const handleNetto = props.handleNetto;
+  const handleDiscounts = props.handleDiscounts;
 
   const calculateNettoSalary = () => {
     let nettoSalary = brutto;
@@ -57,20 +49,27 @@ const SalaryCalculator = ({ user, handleUser }) => {
         nettoSalary += 33000;
       }
     }
-    onCurrentUserDataChange({ ...currentUser, netto: Math.round(nettoSalary) });
+    handleNetto(Math.round(nettoSalary));
   };
+
+  useEffect(() => {
+    calculateNettoSalary();
+  }, [brutto, discounts]);
 
   return (
     <div>
       <NameInput 
         name={name}
-        onNameChange={handleNameChange}
+        handleName={handleName}
       />
       <SalaryInput
         brutto={brutto}
-        onBruttoChange={handleBruttoChange}
+        handleBrutto={handleBrutto}
       />
-      <Discounts discounts={discounts} handleDiscounts={handleDiscounts}/>
+      <Discounts 
+        discounts={discounts}
+        handleDiscounts={handleDiscounts}
+      />
       <p>A nettó bér: {netto}</p>
     </div>
   );
