@@ -57,7 +57,7 @@ const FamilyMemberTabs = ({ setCurrentUser, activeMember }) => {
 
   const handleTabClick = (clickedMember) => {
     setCurrentUser(clickedMember);
-    updateFamilyMember(activeMember); // Az aktív tag adatainak frissítése
+    updateFamilyMember(activeMember);
   };
 
   const updateFamilyMember = (updatedMember) => {
@@ -71,7 +71,7 @@ const FamilyMemberTabs = ({ setCurrentUser, activeMember }) => {
   const addFamilyMember = () => {
     setFamilyMembers(prevMembers => {
       const newMember = {
-        id: familyMembers.length + 1, // Az új tag azonosítója legyen a jelenlegi hossz plusz egy
+        id: familyMembers.length + 1,
         name: "New Member",
         brutto: 0,
         netto: 0,
@@ -90,11 +90,11 @@ const FamilyMemberTabs = ({ setCurrentUser, activeMember }) => {
           family: {
             toggled: false,
             children: 0,
-            dependents: 0, // Helyesírási hiba: dependents helyett
+            dependents: 0,
           },
         },
       };
-      return prevMembers.concat(newMember); // Az új tag hozzáadása a jelenlegi tagokhoz
+      return prevMembers.concat(newMember);
     });
   };
 

@@ -1,13 +1,16 @@
 import React from "react";
+import { Label, Icon, Button } from "semantic-ui-react";
 
 const Tab = ({ member, handleClick, isActive }) => {
   return (
-    <div
+    <Label
       onClick={() => handleClick(member)}
-      className={isActive ? "bg-red-100" : "bg-green-100"}
+      color={isActive ? 'green' : 'grey'}
+      size="large"
+      style={{ cursor: 'pointer' }}
     >
       {member.name}
-    </div>
+    </Label>
   );
 };
 
