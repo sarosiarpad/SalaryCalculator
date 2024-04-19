@@ -28,7 +28,7 @@ const SalaryInput = (props) => {
       </Input>
       <input 
         type="range" 
-        min="100000" 
+        min="0" 
         max="1000000" 
         step="1000"
         value={brutto}

@@ -2,101 +2,9 @@ import React, { useState } from "react";
 import Tab from "./components/Tab";
 import { Button, Icon } from 'semantic-ui-react'
 
-const FamilyMemberTabs = ({ setCurrentUser, activeMember }) => {
+const FamilyMemberTabs = (props) => {
 
-  const [familyMembers, setFamilyMembers] = useState([
-    { 
-      id: 1,
-      name: "John",
-      brutto: 0,
-      netto: 0,
-      discounts: {
-        under25: {
-          toggled: false,
-        },
-        justMarried: {
-          toggled: false,
-          date: "",
-          approved: false,
-        },
-        personal: {
-          toggled: false,
-        },
-        family: {
-          toggled: false,
-          children: 0,
-          dependets: 0,
-        },
-      }
-    },
-    { 
-      id: 2,
-      name: "Maria",
-      brutto: 600000,
-      netto: 0,
-      discounts: {
-        under25: {
-          toggled: false,
-        },
-        justMarried: {
-          toggled: false,
-          date: "",
-          approved: false,
-        },
-        personal: {
-          toggled: false,
-        },
-        family: {
-          toggled: false,
-          children: 0,
-          dependets: 0,
-        },
-      }
-    }
-  ]);
-
-  const handleTabClick = (clickedMember) => {
-    setCurrentUser(clickedMember);
-    updateFamilyMember(activeMember);
-  };
-
-  const updateFamilyMember = (updatedMember) => {
-    setFamilyMembers(prevMembers =>
-      prevMembers.map(member =>
-        member.id === updatedMember.id ? updatedMember : member
-      )
-    );
-  };
-
-  const addFamilyMember = () => {
-    setFamilyMembers(prevMembers => {
-      const newMember = {
-        id: familyMembers.length + 1,
-        name: "New Member",
-        brutto: 0,
-        netto: 0,
-        discounts: {
-          under25: {
-            toggled: false,
-          },
-          justMarried: {
-            toggled: false,
-            date: "",
-            approved: false,
-          },
-          personal: {
-            toggled: false,
-          },
-          family: {
-            toggled: false,
-            children: 0,
-            dependents: 0,
-          },
-        },
-      };
-      return prevMembers.concat(newMember);
-    });
-  };
+  const {familyMembers, activeMember, addFamilyMember, handleActiveMember} = props;
 
   return (
     <div className="flex felx-row gap-5">
@@ -105,7 +13,7 @@ const FamilyMemberTabs = ({ setCurrentUser, activeMember }) => {
           <Tab
             key={member.id}
             member={member}
-            handleClick={handleTabClick}
+            handleClick={handleActiveMember}
             isActive={activeMember && activeMember.id === member.id}
           />
         ))}

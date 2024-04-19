@@ -4,52 +4,56 @@ import SalaryInput from "./components/SalaryInput";
 import NameInput from "./components/NameInput";
 
 const SalaryCalculator = (props) => {
-  const name = props.name;
-  const brutto = props.brutto;
-  const netto = props.netto;
-  const discounts = props.discounts;
-  const {under25, justMarried, personal, family} = props.discounts;
-  const handleName = props.handleName;
-  const handleBrutto = props.handleBrutto;
-  const handleNetto = props.handleNetto;
-  const handleDiscounts = props.handleDiscounts;
+  const {
+    name, 
+    brutto, 
+    netto,
+    discounts,
+    handleName,
+    handleBrutto,
+    handleNetto,
+    handleDiscounts
+  } = props;
+  
+  const {under25, justMarried, personal, family} = discounts;
 
   const calculateNettoSalary = () => {
-    let nettoSalary = brutto;
+    let netto = brutto;
+    let tax = 0;
 
     // TB
-    nettoSalary -= brutto * 0.185;
+    tax = brutto * 0.185;
 
     // under25
     if (under25.toggled) {
       if (brutto >= 499952) {
-        nettoSalary -= (brutto - 499952) * 0.15;
+        tax += (brutto - 499952) * 0.15;
       }
     }else{
-      nettoSalary -= brutto * 0.15
+      tax += brutto * 0.15
     }
-    // personal
-    if (!personal.toggled) {
-      nettoSalary -= 77300;
-      if (nettoSalary < 0) {
-        nettoSalary = 0;
-      }
-    }
+
     // justMarried
     if (justMarried.toggled && justMarried.approved) {
-      nettoSalary += 5000;
+      netto += 5000;
     }
     // family discount
     if (family.toggled && family.dependents > 0) {
       if (family.dependents === 1) {
-        nettoSalary += 10000;
+        netto += 10000;
       } else if (family.dependents === 2) {
-        nettoSalary += 20000;
+        netto += 20000;
       } else if (family.dependents >= 3) {
-        nettoSalary += 33000;
+        netto += 33000;
       }
     }
-    handleNetto(Math.round(nettoSalary));
+
+    console.log(tax);
+    // personal
+    if (personal.toggled) {
+      tax -= tax > 77300 ? 77300 : tax;
+    }
+    handleNetto(Math.round(netto-tax));
   };
 
   useEffect(() => {
