@@ -4,7 +4,7 @@ import {
   ModalContent, 
   ModalActions, 
   Input, Button, 
-  Label, 
+  Label, Icon
 } from "semantic-ui-react";
 import DiscountOption from "./DiscountOption";
 
@@ -58,7 +58,7 @@ const Discounts = (props) => {
     handleDiscounts({
       family: {
         toggled: toggled,
-        children: children > 0 ? children : 0,
+        children: children > 0 ? (children > 3 ? 3 : children) : 0,
         dependents: dependents > 0 ? (dependents > children ? children : dependents) : 0
       }
     });
@@ -67,21 +67,28 @@ const Discounts = (props) => {
   const onMarrigeChecked = () => {
     if (!justMarried.date) {
       return (
-        <Button 
-          basic
-          content="Dátum hozzáadása"
-          onClick={() => dispatch({ type: 'OPEN_MODAL', dimmer: 'blurring' })}
-        />
+        <div className="flex flex-row gap-2 shrink">
+          <Button 
+            primary
+            size="mini"
+            content="Dátum hozzáadása"
+            onClick={() => dispatch({ type: 'OPEN_MODAL', dimmer: 'blurring' })}
+          />
+        </div>
       );
     } else {
       return (
-        <div>
+        <div className="flex flex-row gap-2 shrink relative">
           <Button 
-            basic
-            content="Dátum módosítása"
+            size="mini"
+            primary
             onClick={() => dispatch({ type: 'OPEN_MODAL', dimmer: 'blurring' })}
+            content="Dátum módosítása"
           />
           <Label 
+            className=" text-center w-fit"
+            size="mini"
+            floating="right"
             color={justMarried.approved ? "green" : "red"}
           >
             {justMarried.approved ? "Jogosult" : "Nem jogosult"}
@@ -107,15 +114,28 @@ const Discounts = (props) => {
   }
   const onFamilyChecked = () => {
     return(
-      <div>
-        <button onClick={() => handleFamily(family.toggled, (family.children + 1), family.dependents)}>+</button>
-        <p>{family.children}</p>
-        <button onClick={() => handleFamily(family.toggled, (family.children - 1), family.dependents)}>-</button>
-        <p className="text-xs">Eltartottak, ebből kedvezményezett</p>
-        <button onClick={() => handleFamily(family.toggled, family.children, (family.dependents + 1))}>+</button>
-        <p>{family.dependents}</p>
-        <button onClick={() => handleFamily(family.toggled, family.children, (family.dependents - 1))}>-</button>
-        <p className="text-xs">Kedvezményezettek</p>
+      <div className="flex flex-row gap-5">
+        <div className="flex flex-row gap-2">
+          <button onClick={() => handleFamily(family.toggled, (family.children - 1), family.dependents)}>
+            <Icon name="minus circle" color="blue"/>
+          </button>
+          <p>{family.children}</p>
+          <button onClick={() => handleFamily(family.toggled, (family.children + 1), family.dependents)}>
+            <Icon name="plus circle" color="blue"/>
+          </button>
+        </div>
+
+        <p className=" text-base">Eltartottak, ebből kedvezményezett</p>
+
+        <div className="flex flex-row gap-2">
+          <button onClick={() => handleFamily(family.toggled, family.children, (family.dependents - 1))}>
+            <Icon name="minus circle" color="blue"/>
+          </button>
+          <p>{family.dependents}</p>
+          <button onClick={() => handleFamily(family.toggled, family.children, (family.dependents + 1))}>
+            <Icon name="plus circle" color="blue"/>
+          </button>
+        </div>
       </div>
     );
   }
@@ -133,33 +153,39 @@ const Discounts = (props) => {
   }, [family.toggled, family.children, family.dependents]);
 
   return (
-    <div className='flex flex-col w-80'>
-      <div>
-        <DiscountOption 
-          label={"25 év alattiak SZJA mentessége"}
-          checked={under25.toggled}
-          onChange={ () => handleUnder25(!under25.toggled)}
-        />
-        <DiscountOption 
-          label={"Friss házasok kedvezménye"}
-          checked={justMarried.toggled}
-          onChange={ () => handleJustMarried(!justMarried.toggled, justMarried.date, justMarried.approved)}
-          onChecked={onMarrigeChecked}
-        />
-        <DiscountOption 
-          label={"Személyi adókedvezmény"}
-          checked={personal.toggled}
-          onChange={ () => handlePersonal(!personal.toggled)}
-
-        />
-        <DiscountOption 
-          label={"Családi kedvezmény"}
-          checked={family.toggled}
-          onChange={ () => handleFamily(!family.toggled, family.children, family.dependents)}
-          onChecked={onFamilyChecked}
-        />
+    <div className='flex flex-col w-full'>
+      <div className="flex flex-col gap-3">
+        <div className="flex flex-row gap-2">
+          <DiscountOption 
+            label={"25 év alattiak SZJA mentessége"}
+            checked={under25.toggled}
+            onChange={ () => handleUnder25(!under25.toggled)}
+          />
+        </div>
+        <div className="flex flex-row gap-2">
+          <DiscountOption 
+            label={"Friss házasok kedvezménye"}
+            checked={justMarried.toggled}
+            onChange={ () => handleJustMarried(!justMarried.toggled, justMarried.date, justMarried.approved)}
+          />
+          {justMarried.toggled && onMarrigeChecked()}
+        </div>
+        <div className="flex flex-row gap-2">
+          <DiscountOption 
+            label={"Személyi adókedvezmény"}
+            checked={personal.toggled}
+            onChange={ () => handlePersonal(!personal.toggled)}
+          />
+        </div>
+        <div className="flex flex-col gap-2">
+          <DiscountOption
+            label={"Családi kedvezmény"}
+            checked={family.toggled}
+            onChange={ () => handleFamily(!family.toggled, family.children, family.dependents)}
+          />
+          {family.toggled && onFamilyChecked()}
+        </div>
       </div>
-
       <Modal
         dimmer={dimmer}
         open={open}

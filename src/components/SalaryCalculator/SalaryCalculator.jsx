@@ -2,6 +2,7 @@ import React, { Children, useEffect } from "react";
 import Discounts from "./components/Discounts";
 import SalaryInput from "./components/SalaryInput";
 import NameInput from "./components/NameInput";
+import { Grid, GridColumn, GridRow, Label, Button } from "semantic-ui-react";
 
 const SalaryCalculator = (props) => {
   const {
@@ -12,13 +13,14 @@ const SalaryCalculator = (props) => {
     handleName,
     handleBrutto,
     handleNetto,
-    handleDiscounts
+    handleDiscounts,
+    deleteFamilyMember
   } = props;
   
   const {under25, justMarried, personal, family} = discounts;
 
   const calculateNettoSalary = () => {
-    let netto = brutto;
+    let bonus = 0;
     let tax = 0;
 
     // TB
@@ -35,46 +37,71 @@ const SalaryCalculator = (props) => {
 
     // justMarried
     if (justMarried.toggled && justMarried.approved) {
-      netto += 5000;
+      bonus += 5000;
     }
     // family discount
     if (family.toggled && family.dependents > 0) {
       if (family.dependents === 1) {
-        netto += 10000;
+        bonus += 10000;
       } else if (family.dependents === 2) {
-        netto += 20000;
+        bonus += 20000;
       } else if (family.dependents >= 3) {
-        netto += 33000;
+        bonus += 33000;
       }
     }
 
-    console.log(tax);
     // personal
     if (personal.toggled) {
       tax -= tax > 77300 ? 77300 : tax;
     }
-    handleNetto(Math.round(netto-tax));
+    handleNetto(Math.round(brutto-tax+bonus));
   };
 
   useEffect(() => {
+    handleNetto(0);
     calculateNettoSalary();
   }, [brutto, discounts]);
 
   return (
-    <div>
-      <NameInput 
-        name={name}
-        handleName={handleName}
-      />
-      <SalaryInput
-        brutto={brutto}
-        handleBrutto={handleBrutto}
-      />
-      <Discounts 
-        discounts={discounts}
-        handleDiscounts={handleDiscounts}
-      />
-      <p>A nettó bér: {netto}</p>
+    <div className="flex flex-col w-4/6 bg-blue-100 p-5 rounded-lg">
+      <div className="flex flex-row justify-between w-full mb-5">
+        <h2 className="font-bold text-2xl">{name} bérének kiszámítása</h2>
+        <Button color='blue' icon="trash" onClick={deleteFamilyMember} />
+      </div>
+      <Grid columns={1} className="w-full items-center">
+        <GridColumn className="space-y-5">
+          <GridRow>
+            <div className="flex justify-start">
+              <NameInput 
+                name={name}
+                handleName={handleName}
+              />
+            </div>
+          </GridRow>
+          <GridRow >
+            <div className="flex">
+              <SalaryInput
+                brutto={brutto}
+                handleBrutto={handleBrutto}
+              />
+            </div>
+          </GridRow>
+          <GridRow >
+            <div className="flex">
+              <Discounts 
+                discounts={discounts}
+                handleDiscounts={handleDiscounts}
+              />
+            </div>
+          </GridRow>
+          <GridRow >
+            <div className="flex flex-col w-fit mt-10">
+              <p className=" font-bold text-lg">Számított nettó bér:</p>
+              <Label horizontal color="blue" size="huge">{netto}</Label>
+            </div>
+          </GridRow>
+        </GridColumn>
+      </Grid>
     </div>
   );
 };

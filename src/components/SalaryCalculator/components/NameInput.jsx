@@ -10,13 +10,13 @@ const NameInput = (props) => {
     };
 
     return ( 
-    <div className='flex flex-col w-80'>
-        <h3>Családtag neve</h3>
+    <div className='flex flex-col w-full'>
+        <h3 className=" font-bold text-lg">Családtag neve</h3>
         <Input 
             value={name}
             onChange={handleInputChange} 
         />
-        <p>Add meg a családtag nevét!</p>
+        <p className=" text-sm font-light">Add meg a családtag nevét!</p>
     </div>
     );
 }

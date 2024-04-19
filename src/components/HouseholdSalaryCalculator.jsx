@@ -2,14 +2,14 @@ import React, { useEffect, useState } from "react";
 import FamilyMemberTabs from "./FamilyMemberTabs/FamilyMemberTabs";
 import HouseholdSummary from "./HouseholdSummary/HouseholdSummary";
 import SalaryCalculator from "./SalaryCalculator/SalaryCalculator";
-import { act } from "react-dom/test-utils";
+import { Segment, Grid, GridColumn, Divider } from "semantic-ui-react";
 
 const HouseholdSalaryCalculator = () => {
 
   const [familyMembers, setFamilyMembers] = useState([
     { 
       id: 1,
-      name: "John",
+      name: "New Member",
       brutto: 0,
       netto: 0,
       discounts: {
@@ -32,18 +32,7 @@ const HouseholdSalaryCalculator = () => {
       }
     }
   ])
-  const [activeMember, setActiveMember] = useState({
-    id: 1,
-    name: "John",
-    brutto: 0,
-    netto: 0,
-    discounts: {
-      under25: { toggled: false },
-      justMarried: { toggled: false, date: "", approved: false },
-      personal: { toggled: false },
-      family: { toggled: false, children: 0, dependents: 0 },
-    },
-  });
+  const [activeMember, setActiveMember] = useState(familyMembers[0]);
 
   const updateFamilyMember = (updatedMember) => {
     setFamilyMembers(prevMembers =>
@@ -84,6 +73,13 @@ const HouseholdSalaryCalculator = () => {
     });
   };
 
+  const deleteActiveFamilyMember = () => {
+    setFamilyMembers(prevMembers =>
+      prevMembers.filter(existingMember => existingMember.id !== activeMember.id)
+    );
+    setActiveMember(familyMembers[0]);
+  };
+
   const handleName = (name) => {
     setActiveMember(prevState => ({
       ...prevState,
@@ -118,7 +114,7 @@ const HouseholdSalaryCalculator = () => {
 
   return (
     <>
-      <header>
+      <header className="flex justify-center">
         <FamilyMemberTabs
           familyMembers={familyMembers}
           activeMember={activeMember}
@@ -127,19 +123,34 @@ const HouseholdSalaryCalculator = () => {
         />
       </header>
       <main>
-        <SalaryCalculator
-          name={activeMember.name}
-          brutto={activeMember.brutto}
-          netto={activeMember.netto}
-          discounts={activeMember.discounts}
-          handleName={handleName}
-          handleBrutto={handleBrutto}
-          handleNetto={handleNetto}
-          handleDiscounts={handleDiscounts}
-        />
-        <HouseholdSummary
-          familyMembers={familyMembers}
-        />
+        <Segment>
+          <Grid columns={2}>
+            <GridColumn>
+            <div className="flex justify-end">
+              {activeMember &&
+              <SalaryCalculator
+                  name={activeMember.name}
+                  brutto={activeMember.brutto}
+                  netto={activeMember.netto}
+                  discounts={activeMember.discounts}
+                  handleName={handleName}
+                  handleBrutto={handleBrutto}
+                  handleNetto={handleNetto}
+                  handleDiscounts={handleDiscounts}
+                  deleteFamilyMember={deleteActiveFamilyMember}
+                />
+              }
+            </div>
+            </GridColumn>
+            <GridColumn>
+            <div className="flex justify-start">
+              <HouseholdSummary
+                familyMembers={familyMembers}
+              />
+            </div>
+            </GridColumn>
+          </Grid>     
+        </Segment>
       </main>
     </>
   );

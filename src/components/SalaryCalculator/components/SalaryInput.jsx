@@ -14,8 +14,8 @@ const SalaryInput = (props) => {
   };
 
   return (
-    <div className='flex flex-col w-80'>
-      <h3>Bruttó bér</h3>
+    <div className='flex flex-col w-full'>
+      <h3 className=' font-bold text-lg'>Bruttó bér</h3>
       <Input
         labelPosition='right'
         type='number'
@@ -34,7 +34,7 @@ const SalaryInput = (props) => {
         value={brutto}
         onChange={handleRangeChange}
       />
-      <p>Add meg a bruttó béredet!</p>
+      <p className=" text-sm font-light">Add meg a bruttó béredet!</p>
     </div>
   );
 }

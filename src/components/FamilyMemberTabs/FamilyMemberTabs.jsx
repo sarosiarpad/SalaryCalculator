@@ -7,8 +7,8 @@ const FamilyMemberTabs = (props) => {
   const {familyMembers, activeMember, addFamilyMember, handleActiveMember} = props;
 
   return (
-    <div className="flex felx-row gap-5">
-      <div className="flex flex-row gap-2">
+    <div className="flex flex-row gap-5 p-5 w-4/6 justify-start">
+      <div className="flex flex-row gap-1 flex-wrap">
         {familyMembers.map((member) => (
           <Tab
             key={member.id}

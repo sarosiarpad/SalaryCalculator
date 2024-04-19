@@ -25,9 +25,9 @@ const HouseholdSummary = (props) => {
   }, [familyMembers]);
 
   return <>
-  <div>
-    <h2>Háztartás összesített jövedelme</h2>
-    <Table celled>
+  <div className="flex flex-col items-start w-4/6 bg-blue-100 p-5 rounded-lg">
+    <h2 className="font-bold text-2xl mb-5">Háztartás összesített jövedelme</h2>
+    <Table celled >
       <TableHeader>
         <TableRow>
           <TableHeaderCell>Név</TableHeaderCell>
@@ -43,7 +43,7 @@ const HouseholdSummary = (props) => {
           </TableRow>
         ))}
         <TableRow>
-          <TableCell>Összesen: {familySalary}</TableCell>
+          <TableCell colSpan={2} textAlign="center">Összesen: {familySalary}</TableCell>
         </TableRow>
       </TableBody>
     </Table>

@@ -7,7 +7,7 @@ const Tab = ({ member, handleClick, isActive }) => {
       onClick={() => handleClick(member)}
       color={isActive ? 'green' : 'grey'}
       size="large"
-      style={{ cursor: 'pointer' }}
+      className="cursor-pointer"
     >
       {member.name}
     </Label>
