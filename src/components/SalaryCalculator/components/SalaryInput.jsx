@@ -1,8 +1,8 @@
 import React from 'react';
-import { Input, Label } from 'semantic-ui-react';
+import { Input, Label, Button } from 'semantic-ui-react';
 
 const SalaryInput = (props) => {
-  const brutto = props.brutto;
+  const brutto = Number(props.brutto);
   const handleBrutto = props.handleBrutto;
 
   const handleInputChange = (event) => {
@@ -12,6 +12,10 @@ const SalaryInput = (props) => {
   const handleRangeChange = (event) => {
     handleBrutto(event.target.value);
   };
+
+  const handleButtonChnage = (value) => {
+    handleBrutto(value);
+  }
 
   return (
     <div className='flex flex-col w-full'>
@@ -34,6 +38,12 @@ const SalaryInput = (props) => {
         value={brutto}
         onChange={handleRangeChange}
       />
+      <div className='flex gap-2 justify-center'>
+        <Button size='mini' color='blue' content='-5%' onClick={() => handleButtonChnage(brutto - Math.round(brutto * 0.05))} />
+        <Button size='mini' color='blue' content='-1%' onClick={() => handleButtonChnage(brutto - Math.round(brutto * 0.01))}/>
+        <Button size='mini' color='blue' content='+1%' onClick={() => handleButtonChnage(brutto + Math.round(brutto * 0.01))}/>
+        <Button size='mini' color='blue' content='+5%' onClick={() => handleButtonChnage(brutto + Math.round(brutto * 0.05))}/>
+      </div>
       <p className=" text-sm font-light">Add meg a bruttó béredet!</p>
     </div>
   );
