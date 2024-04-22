@@ -34,28 +34,6 @@ const HouseholdSalaryCalculator = () => {
   ])
   const [activeMember, setActiveMember] = useState(familyMembers[0]);
 
-  const saveDataToLocalStorage = () => {
-    // Save familyMembers to localStorage
-    localStorage.setItem('familyMembers', JSON.stringify(familyMembers));
-    // Save activeMember to localStorage
-    localStorage.setItem('activeMember', JSON.stringify(activeMember));
-  };
-
-  
-  // useEffect to load from localStorage on component mount
-  useEffect(() => {
-    const storedFamilyMembers = JSON.parse(localStorage.getItem('familyMembers'));
-    const storedActiveMember = JSON.parse(localStorage.getItem('activeMember'));
-
-    if (storedFamilyMembers) {
-      setFamilyMembers(storedFamilyMembers);
-    }
-
-    if (storedActiveMember) {
-      setActiveMember(storedActiveMember);
-    }
-  }, []);
-
   const updateFamilyMember = (updatedMember) => {
     setFamilyMembers(prevMembers =>
       prevMembers.map(member =>
@@ -93,15 +71,42 @@ const HouseholdSalaryCalculator = () => {
       setActiveMember(updatedMembers[updatedMembers.length - 1]);
       return updatedMembers;
     });
-    saveDataToLocalStorage();
   };
 
   const deleteActiveFamilyMember = () => {
-    setFamilyMembers(prevMembers =>
-      prevMembers.filter(existingMember => existingMember.id !== activeMember.id)
-    );
-    setActiveMember(familyMembers[0]);
-    saveDataToLocalStorage();
+    if(familyMembers.length > 1){
+      setFamilyMembers(prevMembers => {
+        const remainingMembers = prevMembers.filter(existingMember => existingMember.id !== activeMember.id);
+        setActiveMember(remainingMembers[0]);
+        return remainingMembers;
+      });
+    } else {
+      familyMembers[0] = {
+        id: 1,
+        name: "New Member",
+        brutto: 0,
+        netto: 0,
+        discounts: {
+          under25: {
+            toggled: false,
+          },
+          justMarried: {
+            toggled: false,
+            date: "",
+            approved: false,
+          },
+          personal: {
+            toggled: false,
+          },
+          family: {
+            toggled: false,
+            children: 0,
+            dependets: 0,
+          },
+        }
+      }
+      setActiveMember(familyMembers[0]);
+    }
   };
 
   const handleName = (name) => {
