@@ -38,7 +38,7 @@ const SalaryInput = (props) => {
         value={brutto}
         onChange={handleRangeChange}
       />
-      <div className='flex gap-2 justify-center'>
+      <div className='flex gap-2 justify-center flex-wrap'>
         <Button size='mini' color='blue' content='-5%' onClick={() => handleButtonChnage(brutto - Math.round(brutto * 0.05))} />
         <Button size='mini' color='blue' content='-1%' onClick={() => handleButtonChnage(brutto - Math.round(brutto * 0.01))}/>
         <Button size='mini' color='blue' content='+1%' onClick={() => handleButtonChnage(brutto + Math.round(brutto * 0.01))}/>
