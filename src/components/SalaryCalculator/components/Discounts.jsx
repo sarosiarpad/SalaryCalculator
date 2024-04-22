@@ -190,15 +190,20 @@ const Discounts = (props) => {
         dimmer={dimmer}
         open={open}
         onClose={() => dispatch({ type: 'CLOSE_MODAL' })}
+        size="tiny"
       >
         <ModalContent>
-          <p>A kedvezményt elősször a házasságkötést követő hónapra vehető igénybe és a házassági életközösség alatt legfeljebb 24 hónapon keresztül jár.</p>
-          <h3>Add meg a házasságkötést dátumát!</h3>
-          <Input 
-            type="date" 
-            value={justMarried.date} 
-            onChange={(e) => handleJustMarried(justMarried.toggled, e.target.value, justMarried.approved)}
-          />
+          <div className="flex flex-col gap-5">
+            <p>A kedvezményt elősször a házasságkötést követő hónapra vehető igénybe és a házassági életközösség alatt legfeljebb 24 hónapon keresztül jár.</p>
+            <div className="flex flex-col gap-3">
+              <h3 className="font-bold">Add meg a házasságkötést dátumát:</h3>
+              <Input 
+                type="date" 
+                value={justMarried.date} 
+                onChange={(e) => handleJustMarried(justMarried.toggled, e.target.value, justMarried.approved)}
+              />
+            </div>
+          </div>
         </ModalContent>
         <ModalActions>
           <Button fluid onClick={() => {

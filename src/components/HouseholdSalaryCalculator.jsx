@@ -34,6 +34,28 @@ const HouseholdSalaryCalculator = () => {
   ])
   const [activeMember, setActiveMember] = useState(familyMembers[0]);
 
+  const saveDataToLocalStorage = () => {
+    // Save familyMembers to localStorage
+    localStorage.setItem('familyMembers', JSON.stringify(familyMembers));
+    // Save activeMember to localStorage
+    localStorage.setItem('activeMember', JSON.stringify(activeMember));
+  };
+
+  
+  // useEffect to load from localStorage on component mount
+  useEffect(() => {
+    const storedFamilyMembers = JSON.parse(localStorage.getItem('familyMembers'));
+    const storedActiveMember = JSON.parse(localStorage.getItem('activeMember'));
+
+    if (storedFamilyMembers) {
+      setFamilyMembers(storedFamilyMembers);
+    }
+
+    if (storedActiveMember) {
+      setActiveMember(storedActiveMember);
+    }
+  }, []);
+
   const updateFamilyMember = (updatedMember) => {
     setFamilyMembers(prevMembers =>
       prevMembers.map(member =>
@@ -71,6 +93,7 @@ const HouseholdSalaryCalculator = () => {
       setActiveMember(updatedMembers[updatedMembers.length - 1]);
       return updatedMembers;
     });
+    saveDataToLocalStorage();
   };
 
   const deleteActiveFamilyMember = () => {
@@ -78,6 +101,7 @@ const HouseholdSalaryCalculator = () => {
       prevMembers.filter(existingMember => existingMember.id !== activeMember.id)
     );
     setActiveMember(familyMembers[0]);
+    saveDataToLocalStorage();
   };
 
   const handleName = (name) => {

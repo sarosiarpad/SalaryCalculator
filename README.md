@@ -39,7 +39,7 @@ Tehát léteznek a következő komponensek:
   -[x] A 25 év alattiak SZJA-mentessége esetén a nettó bér jól változik (1pt)
   -[x] A friss házasok kedvezményének bejelölése lehetséges, bejelölése esetén a nettó bér jól változik (1pt)
   -[x] A friss házasok kedvezményének bejelölésekor egy új komponens jelenik meg, melynek a lényege, hogy a felhasználó meg tudja adni, hogy melyik napon házasodott össze. Ha ez régebben volt, mint 24 hónap, a "Nem jogosult" szöveg jelenik meg, két éven belül pedig a "Jogosult" szöveg jelenik meg a jelölőnégyzet mellett, és csak ilyenkor számolódik hozzá a nettóhoz. (3pt)
-  -[ ] Egyedi beviteli komponens: A kedvezményezett és nem kedvezményezett eltartottak számát meg tudjuk adni, és ezek alapján a nettó bér jól változik. Ez a pont akkor is jár, ha ez a mező csak egy sima szöveges beviteli mező. A kedvezményezett eltartottak száma nem lehet több az eltartottak számánál, és nem lehet nagyobb, mint 3. (2pt)
+  -[x] Egyedi beviteli komponens: A kedvezményezett és nem kedvezményezett eltartottak számát meg tudjuk adni, és ezek alapján a nettó bér jól változik. Ez a pont akkor is jár, ha ez a mező csak egy sima szöveges beviteli mező. A kedvezményezett eltartottak száma nem lehet több az eltartottak számánál, és nem lehet nagyobb, mint 3. (2pt)
   -[x] Egyedi beviteli komponens: Az egyedi beviteli komponenssel - és + gombok segítségével tudjuk változtatni a hozzá tartozó szám értékét. (2pt)
 - Háztartás jövedelme
   -[x] Személyek mentése: Az elkészített bérkalkulációt automatikusan elmentődik az alkalmazás állapotterében a megfelelő névvel, és a hozzá tartozó értékekkel. (2 pont)
