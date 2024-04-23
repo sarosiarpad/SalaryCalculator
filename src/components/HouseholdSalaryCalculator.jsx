@@ -154,24 +154,24 @@ const HouseholdSalaryCalculator = () => {
       <main>
         <Segment>
           <Grid columns={2}>
-            <GridColumn>
-            <div className="flex justify-end">
-              {activeMember &&
-              <SalaryCalculator
-                  name={activeMember.name}
-                  brutto={activeMember.brutto}
-                  netto={activeMember.netto}
-                  discounts={activeMember.discounts}
-                  handleName={handleName}
-                  handleBrutto={handleBrutto}
-                  handleNetto={handleNetto}
-                  handleDiscounts={handleDiscounts}
-                  deleteFamilyMember={deleteActiveFamilyMember}
-                />
-              }
-            </div>
+            <GridColumn className=" hover:scale-105">
+              <div className="flex justify-end">
+                {activeMember &&
+                <SalaryCalculator
+                    name={activeMember.name}
+                    brutto={activeMember.brutto}
+                    netto={activeMember.netto}
+                    discounts={activeMember.discounts}
+                    handleName={handleName}
+                    handleBrutto={handleBrutto}
+                    handleNetto={handleNetto}
+                    handleDiscounts={handleDiscounts}
+                    deleteFamilyMember={deleteActiveFamilyMember}
+                  />
+                }
+              </div>
             </GridColumn>
-            <GridColumn>
+            <GridColumn className=" hover:scale-105">
             <div className="flex justify-start">
               <HouseholdSummary
                 familyMembers={familyMembers}

@@ -38,7 +38,7 @@ const HouseholdSummary = (props) => {
       <TableBody>
         {familyMembers.map((member) => (
           <TableRow key={member.id}>
-            <TableCell>{member.name}</TableCell>
+            <TableCell className=" cursor-pointer">{member.name}</TableCell>
             <TableCell>{member.netto} Ft</TableCell>
           </TableRow>
         ))}
